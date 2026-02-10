@@ -1,3 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+mcp_x.py
+
+Author: stneng, littleround, luke
+Source: https://github.com/camelop/mcp-x
+
+A single-file multi-client MCP gateway with per-tool access control.
+"""
+
 import os
 import logging
 import argparse
