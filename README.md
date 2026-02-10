@@ -1,8 +1,10 @@
-![MCP-X Logo](logo.png)
+<img src="logo.png" alt="MCP-X Logo" width="50%">
 
 # MCP-X
 
-A single-file multi-client MCP gateway with per-tool access control. The entire implementation lives in `mcp_x.py`.
+MCP-X is a **single-file** **multi-client** MCP gateway with per-tool access control. The entire implementation lives in `mcp_x.py`.
+
+Each client authenticates with a Bearer token and can bring a list of their own MCP servers, then share specific tools from those servers with other clients. Clients talk MCP at `/mcp`; the middleware filters which tools each client can see/call based on `config.toml` policies. Server owners always have full access to their own tools.
 
 ```
                         MCP-X (:9000)
@@ -37,8 +39,6 @@ Given `server_a` has tools `[a-tool-qwe, a-tool-zxc]` and `server_b` has `[b-too
    ─────────────────────────────────────
    tools:    b-tool-asd, b-tool-jkl, a-tool-qwe, a-tool-zxc
 ```
-
-Each client authenticates with a Bearer token and can bring a list of their own MCP servers, then share specific tools from those servers with other clients. Clients talk MCP at `/mcp`; the middleware filters which tools each client can see/call based on `config.toml` policies. Server owners always have full access to their own tools.
 
 ## Quick Start
 
