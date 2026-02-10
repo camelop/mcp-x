@@ -1,0 +1,13 @@
+[project]
+name = "mcp-x"
+version = "0.1.0"
+description = "A single-file multi-client MCP gateway with per-tool access control."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.128.6",
+    "fastmcp>=2.14.5",
+    "PyJWT>=2.0",
+    "toml>=0.10.2",
+    "httpx>=0.27",
+]

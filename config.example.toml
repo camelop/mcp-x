@@ -1,0 +1,20 @@
+[clients.alice]
+auth_token = "123"
+
+[clients.bob]
+auth_token = "456"
+
+[mcp_servers.server_a]
+url = "http://localhost:9100"
+from_client = "alice"
+
+[mcp_servers.server_b]
+url = "http://localhost:9101"
+from_client = "bob"
+
+[allow.server_a]
+bob = ["*"]
+charlie = ["tool_0", "tool_1*", "*_2"]
+
+[allow.server_b]
+alice = ["b-*a*"]
