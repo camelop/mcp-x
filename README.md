@@ -64,7 +64,7 @@ uv run python mcp_x.py
 
 3. Verify with:
    - **Swagger UI** -- open `http://localhost:9000/docs` to inspect and try the REST endpoints
-   - **MCP Inspector** -- `npx @anthropic-ai/mcp-inspector` then connect to `http://localhost:9000/mcp` with a Bearer token from `config.toml` (e.g. `123` for alice)
+   - **MCP Inspector** -- `npx @modelcontextprotocol/inspector` then connect to `http://localhost:9000/mcp` with a Bearer token from `config.toml` (e.g. `123` for alice)
 
 ## Configuration
 
@@ -80,11 +80,11 @@ auth_token = "456"
 
 # 2. MCP servers: name -> upstream URL + which client registered it
 [mcp_servers.server_a]
-url = "http://localhost:9100"
+url = "http://localhost:9001"
 from_client = "alice"          # alice owns server_a
 
 [mcp_servers.server_b]
-url = "http://localhost:9101"
+url = "http://localhost:9002"
 from_client = "bob"
 
 # 3. Access control: server_name -> { client -> [tool_patterns] }

@@ -29,11 +29,11 @@ async def main():
     server_a = create_test_server("server-a", prefix="a", num_tools=5)
     server_b = create_test_server("server-b", prefix="b", num_tools=5)
 
-    app_a = server_a.http_app(path="/", stateless_http=True)
+    app_a = server_a.http_app(stateless_http=True)
     app_a.add_middleware(
         CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
     )
-    app_b = server_b.http_app(path="/", stateless_http=True)
+    app_b = server_b.http_app(stateless_http=True)
     app_b.add_middleware(
         CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
     )

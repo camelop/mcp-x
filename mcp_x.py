@@ -75,6 +75,10 @@ access_control_lock = asyncio.Lock()
 # Granular access control: client_id -> {server_hash: [tool_patterns]}
 access_control: dict = {}
 server_configs: dict = {}  # server_hash -> {"url": ...}
+dummy_server_config = {
+    "_dummy_0": {"url": "http://0.0.0.0"},
+    "_dummy_1": {"url": "http://0.0.0.0"},
+}  # Used to ensure FastMCP treats it as multi-server
 server_owners: dict = {}  # server_hash -> client_name
 server_name_map: dict[str, str] = {}  # server_hash -> original server_name
 client_tokens: dict[str, str] = {}  # auth_token -> client_name
@@ -101,7 +105,12 @@ _CONFIG_CHECK_INTERVAL: float = 1.0
 
 
 def _refresh_proxy_client_factory(server_configs: dict):
-    mcp_server._tool_manager.client_factory = lambda: ProxyClient(server_configs).new()  # type: ignore
+    # add dummy if less than 2 servers to avoid FastMCP treating it as single-server and skipping middleware
+    s = {
+        **dummy_server_config,
+        **server_configs,
+    }
+    mcp_server._tool_manager.client_factory = lambda: ProxyClient(s).new()  # type: ignore
 
 
 def load_config_from_file(filepath: str = CONFIG_FILE):
@@ -492,8 +501,6 @@ async def register_mcp_server(
 
     async with server_registration_lock:
         global server_configs, server_owners, server_name_map
-        if "dummy" in server_configs:
-            del server_configs["dummy"]
         server_configs[server_hash] = {"url": mcp_server_registration.url}
         server_owners[server_hash] = current_user.client_id
         server_name_map[server_hash] = server_id
@@ -605,10 +612,13 @@ except FileNotFoundError:
 except Exception as e:
     logger.error(f"Error loading initial config: {e}")
 
-if not server_configs:
-    server_configs["dummy"] = {"url": "http://127.0.0.1"}
-
-mcp_server = FastMCP.as_proxy(server_configs, name="MCP-X")
+mcp_server = FastMCP.as_proxy(
+    {
+        **dummy_server_config,
+        **server_configs,
+    },
+    name="MCP-X",
+)
 mcp_server.add_middleware(ListingFilterMiddleware())
 mcp_server.add_middleware(ToolCallFilterMiddleware())
 

@@ -5,11 +5,11 @@ auth_token = "123"
 auth_token = "456"
 
 [mcp_servers.server_a]
-url = "http://localhost:9100"
+url = "http://localhost:9001/mcp"
 from_client = "alice"
 
 [mcp_servers.server_b]
-url = "http://localhost:9101"
+url = "http://localhost:9002/mcp"
 from_client = "bob"
 
 [allow.server_a]
