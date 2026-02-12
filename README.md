@@ -1,4 +1,4 @@
-<img src="logo.png" alt="MCP-X Logo" width="50%">
+<img src="logo.svg" alt="MCP-X Logo" width="50%">
 
 # MCP-X
 
